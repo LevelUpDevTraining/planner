@@ -1,7 +1,10 @@
 import Layout from 'components/Layout';
-import { useFirebaseUser } from 'hooks/useFirebaseUser';
+import Calendar from 'components/Calendar';
 
 export default function Home() {
-  const [user] = useFirebaseUser();
-  return <Layout>Hello World {user?.displayName}</Layout>;
+  return (
+    <Layout>
+      <Calendar />
+    </Layout>
+  );
 }

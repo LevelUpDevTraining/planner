@@ -14,19 +14,4 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
-// const login = () => {
-//   const provider = new firebase.auth.GoogleAuthProvider();
-//   firebase.auth().signInWithRedirect(provider);
-// };
-
-// const logout = async () => {
-//   await firebase.auth().signOut();
-// };
-
-// const onAuthStateChanged = (
-//   cb: firebase.Observer<any, Error> | ((a: firebase.User | null) => any)
-// ) => {
-//   firebase.auth().onAuthStateChanged(cb);
-// };
-
 export { app, firebase };

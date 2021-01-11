@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { firebase } from 'services/Firebase';
 import { atom, useRecoilState, RecoilState } from 'recoil';
 
@@ -18,6 +18,7 @@ export function useFirebaseUser() {
 }
 
 export function useFirebaseAuthEffect() {
+  const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useFirebaseUser();
   useEffect(() => {
     if (!user) {
@@ -30,10 +31,26 @@ export function useFirebaseAuthEffect() {
           };
           setUser(data);
         } else {
-          const provider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithRedirect(provider);
+          setUser(null);
         }
+        setLoading(false);
       });
+    } else {
+      setLoading(false);
     }
   }, [user, setUser]);
+  return [loading, setLoading];
+}
+
+export function login() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({
+    prompt: 'select_account',
+  });
+  firebase.auth().signInWithRedirect(provider);
+}
+
+export async function logout() {
+  await firebase.auth().signOut();
+  window.location.href = '/';
 }
